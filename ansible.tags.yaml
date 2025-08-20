@@ -1,0 +1,26 @@
+---
+- name: Install and Configure Nginx
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      tags: 
+        - update
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      tags:
+        - install
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      tags:
+        - service
+        - nginx
