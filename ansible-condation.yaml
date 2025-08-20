@@ -1,0 +1,16 @@
+---
+- name: Install Nginx on Debian/Ubuntu and RedHat
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install nginx on Debian/Ubuntu
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install nginx on RedHat/CentOS
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == "RedHat"
