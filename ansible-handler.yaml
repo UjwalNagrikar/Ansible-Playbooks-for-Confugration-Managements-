@@ -1,0 +1,33 @@
+---
+- name: Handlers demo - Uninstall and Reinstall Nginx
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Trigger uninstall handler
+      debug:
+        msg: "This will uninstall nginx"
+      notify: Uninstall nginx
+
+    - name: Trigger reinstall handler
+      debug:
+        msg: "This will reinstall nginx and start it"
+      notify: Reinstall nginx
+
+  handlers:
+    - name: Uninstall nginx
+      apt:
+        name: nginx
+        state: absent
+        purge: yes
+
+    - name: Reinstall nginx
+      apt:
+        name: nginx
+        state: present
+      notify: Start nginx   # chain notification to another handler
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
