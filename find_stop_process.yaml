@@ -1,0 +1,12 @@
+---
+- name: Find and stop a process
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: kill nginx process if running
+      ansible.builtin.shell: |
+        if pgrep nginx > /dev/null; then
+          pkill nginx
+        else
+          echo "Nginx is not running"
+        fi
