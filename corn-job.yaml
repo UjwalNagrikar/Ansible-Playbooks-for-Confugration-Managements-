@@ -1,0 +1,11 @@
+---
+- name: Add cron job
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Create a cron job
+      cron:
+        name: "My test job"
+        minute: "0"
+        hour: "0"
+        job: 'echo "Hello World" >> /tmp/Hello.log'
